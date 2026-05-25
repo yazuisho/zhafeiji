@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="header">
+    <text class="title">房间 {{roomCode}}</text>
+    <button class="copy-btn" bindtap="onCopyCode">复制房间码</button>
+  </view>
+
+  <view class="players-area">
+    <text class="section-title">玩家 ({{players.length}}/2)</text>
+    <view class="player-card" wx:for="{{players}}" wx:key="id">
+      <view class="player-info">
+        <text class="player-name">{{item.name}}</text>
+        <text class="player-status {{item.ready ? 'ready' : ''}}">{{item.ready ? '已准备' : '未准备'}}</text>
+      </view>
+      <text class="player-badge {{item.id === hostId ? 'host' : ''}}">{{item.id === hostId ? '房主' : '成员'}}</text>
+    </view>
+    <view class="waiting-card" wx:if="{{players.length < 2}}">
+      <text class="waiting-text">等待对手加入...</text>
+      <text class="waiting-hint">将房间码分享给微信好友</text>
+    </view>
+  </view>
+
+  <view class="action-area">
+    <button class="btn ready-btn {{isReady ? 'active' : ''}}" bindtap="onToggleReady" wx:if="{{players.length === 2}}">
+      {{isReady ? '已准备' : '准备就绪'}}
+    </button>
+    <button class="btn start-btn" bindtap="onStartGame" wx:if="{{isHost && allReady && players.length === 2}}">
+      开始游戏
+    </button>
+    <button class="btn leave-btn" bindtap="onLeaveRoom">离开房间</button>
+  </view>
+</view>

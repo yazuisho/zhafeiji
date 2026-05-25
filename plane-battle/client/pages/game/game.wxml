@@ -1,0 +1,55 @@
+<view class="container">
+
+  <view class="phase-banner phase-{{phase}}">
+    <text wx:if="{{phase === 'placement'}}">布阵阶段 — 放置飞机 ({{planeCount}}/{{maxPlanes}})</text>
+    <text wx:elif="{{phase === 'battle'}}">
+      {{isMyTurn ? '你的回合 — 点击敌方格攻击' : '对手回合，请等待...'}}
+    </text>
+    <text wx:elif="{{phase === 'gameover'}}">{{winnerName}} 获胜！</text>
+  </view>
+
+  <view class="view-toggle" wx:if="{{phase === 'battle'}}">
+    <view class="toggle-btn {{viewMode === 'mybase' ? 'active' : ''}}" bindtap="onToggleView" data-mode="mybase">我的阵地</view>
+    <view class="toggle-btn {{viewMode === 'attack' ? 'active' : ''}}" bindtap="onToggleView" data-mode="attack">攻击 {{attackHits}}/21</view>
+  </view>
+
+  <view class="status-line" wx:if="{{phase === 'battle' && viewMode === 'attack' && lastResult}}">
+    <text class="result-{{lastResult.hit ? 'hit' : 'miss'}}">
+      {{lastResult.hit ? (lastResult.destroyed ? '💥 击沉敌机！' : '🎯 命中！再攻一次') : '💧 未命中'}}
+    </text>
+  </view>
+
+  <view class="status-line" wx:if="{{phase === 'battle'}}">
+    <text class="destroyed-text">已击沉: {{destroyedCount}}/3</text>
+  </view>
+
+  <!-- Grid -->
+  <view class="grid-wrapper">
+    <view class="grid">
+      <view wx:for="{{currentGrid}}" wx:key="row" wx:for-index="rIdx" class="grid-row">
+        <view class="row-label">{{rowLabels[rIdx]}}</view>
+        <view wx:for="{{item}}" wx:key="col" wx:for-index="cIdx" class="cell cell-{{item.state}} {{item.preview ? 'preview' : ''}}" data-row="{{rIdx}}" data-col="{{cIdx}}" bindtap="onCellTap">
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Placement -->
+  <view class="bottom-area" wx:if="{{phase === 'placement'}}">
+    <view class="control-row">
+      <button class="ctrl-btn" bindtap="onRotate">旋转 ({{currentRotationLabel}})</button>
+      <button class="ctrl-btn" bindtap="onClearPlanes">重置</button>
+    </view>
+    <text class="plane-tip">点击格子放置飞机，剩余 {{maxPlanes - planeCount}} 架</text>
+    <button class="btn ready-btn {{planeCount === maxPlanes ? 'active' : ''}}" bindtap="onReady" wx:if="{{planeCount === maxPlanes}}">准备就绪</button>
+  </view>
+
+  <!-- Battle -->
+  <view class="bottom-area" wx:if="{{phase === 'battle' && viewMode === 'attack' && isMyTurn && !waitingForResult}}">
+    <text class="plane-tip">点击敌方网格进行攻击</text>
+  </view>
+
+  <view class="bottom-area" wx:if="{{phase === 'gameover'}}">
+    <button class="btn home-btn" bindtap="onGoHome">返回首页</button>
+  </view>
+</view>

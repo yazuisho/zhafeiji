@@ -1,0 +1,12 @@
+{
+  "name": "plane-battle-server",
+  "version": "1.0.0",
+  "description": "炸飞机 WebSocket 游戏服务器",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}

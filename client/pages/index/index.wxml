@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="title-area">
+    <text class="title">炸飞机</text>
+    <text class="subtitle">微信联机对战</text>
+  </view>
+
+  <view class="name-area">
+    <text class="label">你的昵称</text>
+    <input class="input" placeholder="输入昵称" maxlength="8" value="{{playerName}}" bindinput="onNameInput" />
+  </view>
+
+  <view class="btn-area">
+    <button class="btn primary" bindtap="onCreateRoom">创建房间</button>
+    <view class="divider"><text class="divider-text">或</text></view>
+    <view class="join-row">
+      <input class="input code-input" placeholder="输入房间码" maxlength="4" value="{{roomCode}}" bindinput="onCodeInput" />
+      <button class="btn secondary" bindtap="onJoinRoom">加入</button>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="hint">将房间码分享给微信好友即可对战</text>
+  </view>
+</view>
