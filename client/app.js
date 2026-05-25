@@ -3,7 +3,7 @@ const ws = require('./utils/websocket');
 App({
   globalData: {
     ws,
-    serverUrl: 'ws://localhost:3000',
+    serverUrl: 'wss://plane-battle-production-8a9d.up.railway.app',
     playerId: '',
     playerName: '',
     roomCode: '',
